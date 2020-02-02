@@ -1,0 +1,24 @@
+{
+  "name": "cat-clipmaster",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paopaomo/cat-clipmaster.git"
+  },
+  "author": "Zi Ye",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paopaomo/cat-clipmaster/issues"
+  },
+  "homepage": "https://github.com/paopaomo/cat-clipmaster#readme",
+  "dependencies": {
+    "electron": "^7.1.11",
+    "menubar": "^7.2.0"
+  }
+}
