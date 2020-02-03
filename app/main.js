@@ -1,5 +1,5 @@
 const { menubar } = require('menubar');
-const { globalShortcut } = require('electron');
+const { globalShortcut, Menu } = require('electron');
 
 const mb = menubar({
     browserWindow: {
@@ -10,6 +10,16 @@ const mb = menubar({
     preloadWindow: true,
     index: `file://${__dirname}/index.html`
 });
+
+const secondaryMenu = Menu.buildFromTemplate([
+    {
+        label: 'Quit',
+        accelerator: 'CommandOrControl+Q',
+        click() {
+            mb._app.quit();
+        }
+    }
+]);
 
 mb.on('ready', () => {
     const createClipping = globalShortcut.register('CommandOrControl+!', () => {
@@ -35,4 +45,8 @@ mb.on('ready', () => {
     if(!publishClipping) {
         console.error('Registration failed', 'publishClipping');
     }
+
+    mb._tray.on('right-click', () => {
+        mb._tray.popUpContextMenu(secondaryMenu);
+    });
 });
