@@ -24,6 +24,38 @@ const addClippingToList = () => {
     clippingList.prepend(clippingElement);
 };
 
+const getButtonParent = ({ target }) => {
+    return target.parentNode.parentNode;
+};
+
+const getClippingText = (clippingListItem) => {
+    return clippingListItem.querySelector('.clipping-text').innerText;
+};
+
+const removeClipping = (clippingItem) => {
+    clippingItem.remove();
+};
+
+const writeToClipboard = (clippingText) => {
+    clipboard.writeText(clippingText);
+};
+
 copyFromClipboardButton.addEventListener('click', () => {
     addClippingToList();
+});
+
+clippingList.addEventListener('click', (event) => {
+    const hasClass = className => event.target.classList.contains(className);
+
+    const clippingItem = getButtonParent({ target: event.target});
+
+    if(hasClass('copy-clipping')) {
+        writeToClipboard(getClippingText(clippingItem));
+    }
+    if(hasClass('publish-clipping')) {
+        console.log(getClippingText(clippingItem));
+    }
+    if(hasClass('remove-clipping')) {
+        removeClipping(clippingItem);
+    }
 });
