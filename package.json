@@ -19,6 +19,7 @@
   "homepage": "https://github.com/paopaomo/cat-clipmaster#readme",
   "dependencies": {
     "electron": "^7.1.11",
-    "menubar": "^7.2.0"
+    "menubar": "^7.2.0",
+    "request": "^2.88.0"
   }
 }

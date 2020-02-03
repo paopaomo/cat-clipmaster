@@ -40,6 +40,27 @@ const writeToClipboard = (clippingText) => {
     clipboard.writeText(clippingText);
 };
 
+const request = require('request').defaults({
+    headers: {
+        'User-Agent': 'Cat-Clipmaster'
+    },
+    json: true
+});
+
+const publishClipping = (clipping) => {
+  request.post({
+      url: 'https://cliphub.glitch.me/clippings',
+      json: { clipping }
+  }, (error, response, body) => {
+      if(error) {
+          return alert(JSON.parse(error).message);
+      }
+      const url = body.url;
+      alert(url);
+      clipboard.writeText(url);
+  });
+};
+
 copyFromClipboardButton.addEventListener('click', () => {
     addClippingToList();
 });
@@ -53,7 +74,7 @@ clippingList.addEventListener('click', (event) => {
         writeToClipboard(getClippingText(clippingItem));
     }
     if(hasClass('publish-clipping')) {
-        console.log(getClippingText(clippingItem));
+        publishClipping(getClippingText(clippingItem));
     }
     if(hasClass('remove-clipping')) {
         removeClipping(clippingItem);
