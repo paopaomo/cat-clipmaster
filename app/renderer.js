@@ -1,4 +1,4 @@
-const { clipboard } = require('electron');
+const { clipboard, shell } = require('electron');
 
 const clippingList = document.getElementById('clipping-list');
 const copyFromClipboardButton = document.getElementById('copy-from-clipboard');
@@ -53,11 +53,19 @@ const publishClipping = (clipping) => {
       json: { clipping }
   }, (error, response, body) => {
       if(error) {
-          return alert(JSON.parse(error).message);
+          return new Notification('Error Publishing your clipping', {
+              body: JSON.parse(error).message
+          });
       }
       const url = body.url;
-      alert(url);
-      clipboard.writeText(url);
+      const notification = new Notification(
+          'Your Clipping Has Been Published',
+          { body: `Click to open ${url} in your browser` }
+      );
+      notification.onclick = () => {
+          shell.openExternal(url);
+          clipboard.writeText(url);
+      };
   });
 };
 
