@@ -1,4 +1,4 @@
-const { clipboard, shell } = require('electron');
+const { clipboard, shell, ipcRenderer } = require('electron');
 
 const clippingList = document.getElementById('clipping-list');
 const copyFromClipboardButton = document.getElementById('copy-from-clipboard');
@@ -87,4 +87,18 @@ clippingList.addEventListener('click', (event) => {
     if(hasClass('remove-clipping')) {
         removeClipping(clippingItem);
     }
+});
+
+ipcRenderer.on('create-new-clipping', () => {
+    addClippingToList();
+    new Notification(
+        'Clipping Added',
+        { body: `${clipboard.readText()}`}
+    )
+});
+ipcRenderer.on('write-to-clipboard', () => {
+    writeToClipboard(getClippingText(clippingList.firstChild));
+});
+ipcRenderer.on('publish-clipping', () => {
+    publishClipping(getClippingText(clippingList.firstChild));
 });
